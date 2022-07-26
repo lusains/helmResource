@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  labels:
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: zuul-proxy
+data:
+  application.yaml: |+
+    eureka:
+      client:
+{{ if .Values.eureka.client.serviceUrl.defaultZone }}
+        serviceUrl:
+          defaultZone: {{ .Values.eureka.client.serviceUrl.defaultZone }}
+{{ else }}
+        enabled: false
+{{ end }}

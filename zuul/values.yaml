@@ -1,0 +1,38 @@
+# Default values for spring-zuul-proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: ibmcase/spring-zuul-proxy
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  name: zuul
+  type: ClusterIP
+  externalPort: 8080
+  internalPort: 8080
+
+resources:
+  limits:
+    memory: 4096Mi
+  requests:
+    memory: 2048Mi
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: zuul.paas.picc.com
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
